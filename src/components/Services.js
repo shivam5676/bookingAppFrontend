@@ -2,10 +2,11 @@ import herobg from "./images/herobg.jpg";
 const Services = () => {
   return (
     <div className="container">
+        <h3 className="text-center fw-bold">Latest Tourist Spot</h3>
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-4">
       <div className="col">
           <div className="card m-2 " >
-            <img src={herobg} height={"200px"} className="img pb-1"></img>
+            <img src={herobg} height={"200px"} className="img pb-1" draggable="false"></img>
 
             <div className=" border-bottom text-center">
               <h3>lakshyadeep tour</h3>
@@ -42,7 +43,7 @@ const Services = () => {
         </div>
         <div className="col">
           <div className="card m-2 " >
-            <img src={herobg} height={"200px"} className="img pb-1"></img>
+            <img src={herobg} height={"200px"} className="img pb-1" draggable="false"></img>
 
             <div className=" border-bottom text-center">
               <h3>lakshyadeep tour</h3>
