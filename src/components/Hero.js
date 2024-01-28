@@ -14,7 +14,7 @@ const Hero = () => {
           <div className={`col`}>
             <input
               type="text"
-              class="form-control"
+              class="form-control rounded-pill"
               placeholder="Username"
               aria-label="Username"
               aria-describedby="basic-addon1"
