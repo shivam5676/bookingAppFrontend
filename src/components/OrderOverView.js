@@ -1,13 +1,11 @@
+import BuyBtn from "./BuyBtn";
 import herobg from "./images/herobg.jpg";
+import ProductOverViewHeader from "./productOverViewHeader";
 const ProductOverView = () => {
   return (
-    <div className="container-fluid py-2 text-center ">
-      <div className="d-flex justify-content-between ">
-        <div className="">back btn icon</div>
-        <div className="">package title</div>
-        <div className="">anything else or remove this</div>
-      </div>
-      <div className="container py-2 px-3">
+    <div className="container-fluid py-1 text-center ">
+      <ProductOverViewHeader></ProductOverViewHeader>
+      <div className="container pb-2 px-sm-3 pt-3 mt-5 ">
         <div id="carouselExampleCaptions" class="carousel slide">
           <div class="carousel-indicators">
             <button
@@ -127,19 +125,7 @@ const ProductOverView = () => {
           </div>
         </div>
       </div>
-      <div className="container px-5 ">
-        <div className="card mx-md-5 px-md-5 bg-warning">
-          <div className="row row-cols-1 row-cols-md-2 ">
-            <div className="col">
-              <p> Amount</p>
-              <h5>Rs. 30000</h5>
-            </div>
-            <div className="col d-flex align-items-center justify-content-center">
-              <button className="btn btn-outline-dark">buy it</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <BuyBtn></BuyBtn>
     </div>
   );
 };
