@@ -4,11 +4,16 @@ import NavBar from "./components/NavBar";
 import Offers from "./components/Offers";
 import ProductOverView from "./components/OrderOverView";
 import Services from "./components/Services";
+import Cart from "./components/Cart";
 
 function App() {
   return (
     <div className="App">
       <Routes>
+      <Route
+          path="/cart"
+          element={<Cart></Cart>}
+        ></Route>
         <Route
           path="/product/:productid"
           element={<ProductOverView></ProductOverView>}
