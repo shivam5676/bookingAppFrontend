@@ -1,4 +1,5 @@
-import offercss from "./Offers.module.css";import herobg from "./images/herobg.jpg";
+import offercss from "./Offers.module.css";
+import herobg from "./images/herobg.jpg";
 const Offers = () => {
   return (
     <div className="container-fluid mx-0">

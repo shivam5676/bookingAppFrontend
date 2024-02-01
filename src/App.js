@@ -5,8 +5,22 @@ import Offers from "./components/Offers";
 import ProductOverView from "./components/OrderOverView";
 import Services from "./components/Services";
 import Cart from "./components/Cart";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { dataSliceActions } from "./store/data";
+import axios from "axios";
 
 function App() {
+  // const dispatch=useDispatch()
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/products")
+  //     .then((result) => {
+        
+  //       dispatch(dataSliceActions.addproduct(result.data))
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
   return (
     <div className="App">
       <Routes>

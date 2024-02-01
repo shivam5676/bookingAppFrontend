@@ -11,7 +11,7 @@ const Hero = () => {
           <div className={`col`}>
             <input
               type="text"
-              class="form-control rounded-pill"
+              className="form-control rounded-pill"
               placeholder="Username"
               aria-label="Username"
               aria-describedby="basic-addon1"
@@ -20,7 +20,7 @@ const Hero = () => {
           <div className="col mt-3">
             <button
               type="button"
-              class="btn btn-outline-secondary  px-4"
+              className="btn btn-outline-secondary  px-4"
             >
               Search
             </button>
