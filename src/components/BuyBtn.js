@@ -1,19 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import BuyBtncss from "./BuyBtn.module.css";
 import axios from "axios";
+import { cartSliceActions } from "../store/cart";
+import { useDispatch} from "react-redux";
 const BuyBtn = (props) => {
   const navigate = useNavigate();
+  const dispatch=useDispatch()
+ 
   function addItemToCart(){
 console.log(props.productId)
 axios
       .post(`http://localhost:4000/addItem?pid=${props.productId}`)
       .then((result) => {
-        console.log(result)
-        // dispatch(dataSliceActions.addproduct(result.data))
+        // console.log(result)
+        dispatch(cartSliceActions.addProductInCart(result.data))
       })
       .catch((err) => console.log(err));
   
-    // navigate("/cart");
+    navigate("/cart");
   }
   return (
     <div className="container px-5 ">

@@ -9,18 +9,22 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { dataSliceActions } from "./store/data";
 import axios from "axios";
+import { cartSliceActions } from "./store/cart";
 
 function App() {
-  // const dispatch=useDispatch()
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/products")
-  //     .then((result) => {
+  const dispatch=useDispatch()
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/fetchCart`)
+      .then((result) => {
+        // setProductDescription(result.data);
+        result.data.forEach(current => {
+          dispatch(cartSliceActions.addProductInCart(current))
+        });
         
-  //       dispatch(dataSliceActions.addproduct(result.data))
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <div className="App">
       <Routes>

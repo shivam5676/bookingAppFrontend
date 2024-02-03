@@ -27,9 +27,9 @@ const PrintServices = (props) => {
       );
     }
     return (
-      <div className="col shadow bg-body-tertiary" key={current.id}>
+      <div className="col " key={current.id}>
         <div
-          className="card mt-3 "
+          className="card shadow bg-body-tertiary mt-3 "
           onClick={() => {
             navigate(`/product/${current.id}`,{state:current.packageInclude});
           }}

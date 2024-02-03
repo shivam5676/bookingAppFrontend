@@ -22,7 +22,7 @@ const ProductOverView = () => {
         setProductDescription(result.data);
         let caraouselArray;
         
-        
+        console.log(params.productid)
       })
 
       .catch((err) => console.log(err));
