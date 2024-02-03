@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import herobg from "./images/herobg.jpg";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import printcss from "./printServices.module.css"
 import { FaCar, FaHotel, FaSwimmingPool } from "react-icons/fa";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
@@ -29,7 +27,7 @@ const PrintServices = (props) => {
     return (
       <div className="col " key={current.id}>
         <div
-          className="card shadow bg-body-tertiary mt-3 "
+          className={`card shadow bg-body-tertiary mt-3 `}
           onClick={() => {
             navigate(`/product/${current.id}`,{state:current.packageInclude});
           }}
@@ -41,7 +39,7 @@ const PrintServices = (props) => {
             draggable="false"
           ></img>
 
-          <div className=" border-bottom d-flex justify-content-between px-1">
+          <div className={ `border-bottom d-flex justify-content-between px-1 `}>
             <h3 className="px-1">{current.name}</h3>
             <span className="px-1 fw-lighter">{current.packageInclude.Duration}</span>
           </div>

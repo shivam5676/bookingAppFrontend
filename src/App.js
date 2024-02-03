@@ -10,28 +10,26 @@ import { useDispatch } from "react-redux";
 import { dataSliceActions } from "./store/data";
 import axios from "axios";
 import { cartSliceActions } from "./store/cart";
+import Orders from "./components/orders";
 
 function App() {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     axios
       .get(`http://localhost:4000/fetchCart`)
       .then((result) => {
         // setProductDescription(result.data);
-        result.data.forEach(current => {
-          dispatch(cartSliceActions.addProductInCart(current))
+        result.data.forEach((current) => {
+          dispatch(cartSliceActions.addProductInCart(current));
         });
-        
       })
       .catch((err) => console.log(err));
   }, []);
   return (
     <div className="App">
       <Routes>
-      <Route
-          path="/cart"
-          element={<Cart></Cart>}
-        ></Route>
+        <Route path="/cart" element={<Cart></Cart>}></Route>
+        <Route path="/order" element={<Orders></Orders>}></Route>
         <Route
           path="/product/:productid"
           element={<ProductOverView></ProductOverView>}
@@ -48,6 +46,7 @@ function App() {
           }
         ></Route>
       </Routes>
+      
     </div>
   );
 }

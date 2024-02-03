@@ -2,13 +2,16 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import CartPayment from "./cartPayment";
+import { IoMdArrowRoundBack, IoMdBackspace } from "react-icons/io";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const CartItemPrint = () => {
+  const navigate = useNavigate();
   const statecart = useSelector((current) => current.cart.cartItem);
   const [cartData, setCartData] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [couponApply,setCouponApply]=useState("0%")
-  const [productIdArray,setProductIdArray]=useState([]);
+  const [couponApply, setCouponApply] = useState("0%");
+  const [productIdArray, setProductIdArray] = useState([]);
   const couponRef = useRef("");
   const couponHandler = () => {
     axios
@@ -16,27 +19,15 @@ const CartItemPrint = () => {
         `http://localhost:4000/couponVerify?coupon=${couponRef.current.value}`
       )
       .then((res) => {
-        setCouponApply(res.data.data)
+        setCouponApply(res.data.data);
       })
       .catch((err) => console.log(err));
   };
-  // const paymentHandler=()=>{
-  //   console.log(productIdArray)
-  //   axios
-  //     .post(
-  //       `http://localhost:4000/order?coupon=${couponRef.current.value}`,productIdArray
-  //     )
-  //     .then((res) => {
-  //       console.log(res)
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
-  // console.log(statecart)
 
   useEffect(() => {
     let total = 0;
     const arrayData = statecart.map((current) => {
-setProductIdArray((prev)=>[...prev,current.id])
+      setProductIdArray((prev) => [...prev, current.id]);
       total = current.quantity * current.product.price + total;
 
       return (
@@ -72,15 +63,22 @@ setProductIdArray((prev)=>[...prev,current.id])
         </div>
       );
     });
-    
+
     setCartData(arrayData);
     setTotalAmount(total);
   }, [statecart]);
-  console.log(productIdArray)
+  console.log(productIdArray);
   return (
     <>
-      <div className="container fixed-top border text-center">
+      <div className="container-fluid fixed-top border text-center d-flex justify-content-between bg-warning">
+        <IoMdArrowRoundBack
+          className="mt-1 ms-2"
+          style={{ height: "30px", width: "30px" }}
+          onClick={() => navigate(-1)}
+        />
         <h3>Cart</h3>
+        <h3 className="mt-1 ms-2"
+          style={{ height: "30px", width: "30px" }}></h3>
       </div>
       <div
         className="container  text-center mb-5 "
@@ -105,14 +103,23 @@ setProductIdArray((prev)=>[...prev,current.id])
           <div className="col d-flex  justify-content-center align-items-center text-white text-center pb-3">
             <div className="row row-cols-1 ">
               <p className="col">Total Amount : {totalAmount}</p>
-              {couponApply=="0%"?<p className="col">coupon : no coupon</p>:<p className="col">coupon : {couponApply}</p>}
+              {couponApply == "0%" ? (
+                <p className="col">coupon : no coupon</p>
+              ) : (
+                <p className="col">coupon : {couponApply}</p>
+              )}
               <h4 className="col">{` payable : ${
-                (totalAmount * (100 - couponApply.replace("%",""))) / 100
+                (totalAmount * (100 - couponApply.replace("%", ""))) / 100
               }`}</h4>
             </div>
           </div>
-          
-          {productIdArray&&<CartPayment coupon={couponRef.current.value} productIdArray={productIdArray}></CartPayment>}
+
+          {productIdArray && (
+            <CartPayment
+              coupon={couponRef.current.value}
+              productIdArray={productIdArray}
+            ></CartPayment>
+          )}
         </div>
       </div>
     </>

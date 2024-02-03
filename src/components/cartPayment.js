@@ -67,8 +67,8 @@ const CartPayment = (props) => {
 
     axios
       .post(
-        `http://localhost:4000/order?coupon=${props.coupon}`,
-        props.productIdArray
+        `http://localhost:4000/createorder?coupon=${props.coupon}`,
+        {productIdArray:props.productIdArray,coupon:props.coupon}
       )
       .then((data) => {
         console.log(data)
@@ -85,17 +85,17 @@ const CartPayment = (props) => {
               try {
                 console.log("posting started");
                 await axios.post(
-                  `${domain}/premiumuser/updateMembership`,
+                  `http://localhost:4000/successfulOrder?orderId=${data.data.order}`,
                   {
                     order_id: options.order_id,
                     payment_id: response.razorpay_payment_id,
                   },
-                  {
-                    headers: { Authorization: localStorage.getItem("token") },
-                  }
+                //   {
+                //     headers: { Authorization: localStorage.getItem("token") },
+                //   }
                 );
                 localStorage.setItem("isPremium", true); //later we have to replace this localstorage to context direct fetch method when user reload the page then it should be saved in context
-                toast.success("payment done");
+                alert("payment done");
               } catch (err) {
                 console.log(err);
                 // toast.error(err);
@@ -111,6 +111,7 @@ const CartPayment = (props) => {
         paymentObject.open();
       })
       .catch((err) => console.log(err));
+
   };
   return (
     <div className="col d-flex align-items-center justify-content-center w-100">
