@@ -5,7 +5,7 @@ const cartSlice = createSlice({
   initialState: intialCartState,
   reducers: {
     addProductInCart(state, action) {
-        console.log(action)
+      console.log(action);
       const CopiedState = state.cartItem;
 
       const findProduct = state.cartItem.findIndex((current) => {
@@ -14,7 +14,7 @@ const cartSlice = createSlice({
           current.productId == action.payload.productId
         );
       });
-      if (findProduct!=-1) {
+      if (findProduct != -1) {
         const existingItem = CopiedState[findProduct];
         console.log(existingItem);
         const updatedItem = {
@@ -26,6 +26,9 @@ const cartSlice = createSlice({
       } else {
         state.cartItem = [...state.cartItem, action.payload];
       }
+    },
+    clearCart(state, action) {
+      state.cartItem = [];
     },
   },
 });

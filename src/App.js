@@ -4,19 +4,29 @@ import NavBar from "./components/NavBar";
 import Offers from "./components/Offers";
 import ProductOverView from "./components/OrderOverView";
 import Services from "./components/Services";
-import Cart from "./components/Cart";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { dataSliceActions } from "./store/data";
+// import Cart from "./components/CartItem";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import axios from "axios";
 import { cartSliceActions } from "./store/cart";
 import Orders from "./components/orders";
+import CartItem from "./components/CartItem";
+import Login from "./components/login";
+import SignUp from "./components/signUp";
 
 function App() {
   const dispatch = useDispatch();
+ const login=useSelector(state=>state.login.islogin)
+ 
+
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/fetchCart`)
+      .get(`http://localhost:4000/fetchCart`,{
+        headers: {
+          'Authorization': localStorage.getItem("token"),
+        },
+      })
       .then((result) => {
         // setProductDescription(result.data);
         result.data.forEach((current) => {
@@ -28,25 +38,44 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/cart" element={<Cart></Cart>}></Route>
-        <Route path="/order" element={<Orders></Orders>}></Route>
-        <Route
-          path="/product/:productid"
-          element={<ProductOverView></ProductOverView>}
-        ></Route>
-        <Route
-          path="*"
-          element={
-            <>
-              <NavBar></NavBar>
-              <Hero></Hero>
-              <Offers></Offers>
-              <Services></Services>
-            </>
-          }
-        ></Route>
+        {login ? (
+          <>
+            <Route path="/cart" element={<CartItem></CartItem>}></Route>
+            <Route path="/order" element={<Orders></Orders>}></Route>
+            <Route
+              path="/product/:productid"
+              element={<ProductOverView></ProductOverView>}
+            ></Route>
+            <Route
+              path="*"
+              element={
+                <>
+                  <NavBar></NavBar>
+                  <Hero></Hero>
+                  <Offers></Offers>
+                  <Services></Services>
+                </>
+              }
+            ></Route>
+          </>
+        ) : (
+          <>
+          <Route
+              path="/"
+              element={
+                <>
+                  <NavBar></NavBar>
+                  <Hero></Hero>
+                  <Offers></Offers>
+                  <Services></Services>
+                </>
+              }
+            ></Route>
+            <Route path="/signup" element={<SignUp></SignUp>}></Route>
+            <Route path="*" element={<Login></Login>}></Route>
+          </>
+        )}
       </Routes>
-      
     </div>
   );
 }

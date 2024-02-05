@@ -1,11 +1,11 @@
 
 import CartItemPrint from "./cartItemPrint";
 
-const Cart = () => {
+const CartItem = () => {
 
   return (
    
     <CartItemPrint></CartItemPrint>
   );
 };
-export default Cart;
+export default CartItem;

@@ -11,9 +11,11 @@ const Services = () => {
   const dispatch=useDispatch()
   useEffect(() => {
     axios
-      .get("http://localhost:4000/products")
+      .get("http://localhost:4000/products", {headers: {
+        'Authorization': localStorage.getItem("token"),
+      }},)
       .then((result) => {
-        console.log(result)
+     
         dispatch(dataSliceActions.addproduct(result.data))
       })
       .catch((err) => console.log(err));

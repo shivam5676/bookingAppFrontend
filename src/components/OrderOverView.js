@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { FaCar, FaClock, FaHotel, FaSwimmingPool } from "react-icons/fa";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { IoMdLocate } from "react-icons/io";
+import { ThreeCircles } from "react-loader-spinner";
 const ProductOverView = () => {
   const dispatch = useDispatch();
 
@@ -16,18 +17,18 @@ const ProductOverView = () => {
   const [productDescription, setProductDescription] = useState(null);
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/productDetails/${params.productid}`)
+      .get(`http://localhost:4000/productDetails/${params.productid}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((result) => {
-        console.log(result.data);
         setProductDescription(result.data);
         let caraouselArray;
-        
-        console.log(params.productid)
       })
 
       .catch((err) => console.log(err));
   }, []);
-// console.log(productDescription)
 
   return (
     <>
@@ -61,20 +62,25 @@ const ProductOverView = () => {
                 ></button>
               </div>
               <div className="carousel-inner">
-               {/* { caraousel} */}
-                {Object.entries(productDescription.images).map(([keys, current], index) => {
-                 return <div className={`carousel-item ${index==0?'active':""}`} key={index}>
-                    <img
-                      src={current}
-                      className="d-block w-100 "
-                      alt="..."
-                      height={"400px"}
-                    />
-                    
-                  </div>;
-                  
-                })}
-                
+                {Object.entries(productDescription.images).map(
+                  ([keys, current], index) => {
+                    return (
+                      <div
+                        className={`carousel-item ${
+                          index == 0 ? "active" : ""
+                        }`}
+                        key={index}
+                      >
+                        <img
+                          src={current}
+                          className="d-block w-100 "
+                          alt="..."
+                          height={"400px"}
+                        />
+                      </div>
+                    );
+                  }
+                )}
               </div>
               <button
                 className="carousel-control-prev"
@@ -106,10 +112,6 @@ const ProductOverView = () => {
             <div className="card py-md-3 my-4 mx-md-5 px-2 px-md-5">
               <h3>Package OverView</h3>
               {productDescription.overview}
-              {/* hello my name is honey dihsjhjhas jshajhjh sjkjaksjk jhskjkasdk qlwk
-          lqkw lkwsj swqjkeqkjhekjh qkwll qw;qlws hwsjqkejwk hello my name is
-          honey dihsjhjhas jshajhjh sjkjaksjk jhskjkasdk qlwk lqkw lkwsj
-          swqjkeqkjhekjh qkwll qw;qlws hwsjqkejw */}
             </div>
 
             <div className="card py-3 my-4 mx-md-5">
@@ -118,13 +120,11 @@ const ProductOverView = () => {
                 <div className="col border-end">
                   <h4>{productDescription.hotels.name}</h4>
                   <div>
-                    {/* <h6>{productDescription.hotels}</h6> */}
                     <p>{productDescription.hotels.description}</p>
                     <ul>
                       {productDescription.hotels.services.map((current) => (
                         <li key={Math.random()}>{current}</li>
                       ))}
-                      {/* <li>hotel dinning and aother services point by point</li> */}
                     </ul>
                   </div>
                 </div>
@@ -156,10 +156,27 @@ const ProductOverView = () => {
               </div>
             </div>
           </div>
-          <BuyBtn productId={productDescription.productId}></BuyBtn>
+          <BuyBtn
+            productId={productDescription.productId}
+            price={productDescription.product.price}
+          ></BuyBtn>
         </div>
       ) : (
-        <div>loading....</div>
+        <div
+          className="container d-flex justify-content-center align-items-center "
+          style={{ width: "100vw", height: "100vh" }}
+        >
+          <ThreeCircles
+            visible={true}
+            height="100"
+            width="100"
+            color="#4fa94d"
+            ariaLabel="three-circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+          <h1>loading....</h1>
+        </div>
       )}
     </>
   );

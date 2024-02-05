@@ -8,15 +8,25 @@ import { Navigate, useNavigate } from "react-router-dom";
 const CartItemPrint = () => {
   const navigate = useNavigate();
   const statecart = useSelector((current) => current.cart.cartItem);
+ 
   const [cartData, setCartData] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
+  
   const [couponApply, setCouponApply] = useState("0%");
   const [productIdArray, setProductIdArray] = useState([]);
   const couponRef = useRef("");
+let couponEntered;
   const couponHandler = () => {
+  couponEntered=couponRef.current.value;
+
     axios
       .get(
-        `http://localhost:4000/couponVerify?coupon=${couponRef.current.value}`
+        `http://localhost:4000/couponVerify?coupon=${couponEntered}`,
+        {
+          headers: {
+            'Authorization': localStorage.getItem("token"),
+          },
+        }
       )
       .then((res) => {
         setCouponApply(res.data.data);
@@ -33,7 +43,7 @@ const CartItemPrint = () => {
       return (
         <div className=" card border-success mb-2" key={Math.random()}>
           <div className="row row-cols-2" style={{ height: "100px" }}>
-            <div className="col-4 col-sm-3 border-end">
+            <div className="col-4 col-sm-3 ">
               <img
                 className=""
                 src={current.product.image}
@@ -70,58 +80,93 @@ const CartItemPrint = () => {
   console.log(productIdArray);
   return (
     <>
-      <div className="container-fluid fixed-top border text-center d-flex justify-content-between bg-warning">
-        <IoMdArrowRoundBack
-          className="mt-1 ms-2"
-          style={{ height: "30px", width: "30px" }}
-          onClick={() => navigate(-1)}
-        />
-        <h3>Cart</h3>
-        <h3 className="mt-1 ms-2"
-          style={{ height: "30px", width: "30px" }}></h3>
-      </div>
-      <div
-        className="container  text-center mb-5 "
-        style={{ paddingBottom: "30vh" }}
-      >
-        <div className=" p-1 p-m-5 mt-5">{cartData}</div>
-      </div>
-      <div className="container fixed-bottom border pt-2 bg-dark">
-        <div className="row row-cols-1 row-cols-sm-2 pb-3 ">
-          <div className="col  text-white text-center pb-3">
-            <input
-              placeholder="enter coupon code"
-              className=""
-              ref={couponRef}
-            ></input>
-            <span>
-              <button className="btn btn-success m-2" onClick={couponHandler}>
-                Apply
-              </button>
-            </span>
+      {statecart.length > 0 && (
+        <>
+          <div className="container-fluid fixed-top border text-center d-flex justify-content-between bg-warning">
+            <IoMdArrowRoundBack
+              className="mt-1 ms-2"
+              style={{ height: "30px", width: "30px" }}
+              onClick={() => navigate(-1)}
+            />
+            <h3>Cart</h3>
+            <h3
+              className="mt-1 ms-2"
+              style={{ height: "30px", width: "30px" }}
+            ></h3>
           </div>
-          <div className="col d-flex  justify-content-center align-items-center text-white text-center pb-3">
-            <div className="row row-cols-1 ">
-              <p className="col">Total Amount : {totalAmount}</p>
-              {couponApply == "0%" ? (
-                <p className="col">coupon : no coupon</p>
-              ) : (
-                <p className="col">coupon : {couponApply}</p>
+          <div
+            className="container  text-center mb-5 "
+            style={{ paddingBottom: "30vh" }}
+          >
+            <div className=" p-1 p-m-5 mt-5">{cartData}</div>
+          </div>
+          <div className="container fixed-bottom border pt-2 bg-dark">
+            <div className="row row-cols-1 row-cols-sm-2 pb-3 ">
+              <div className="col  text-white text-center pb-3">
+                <input
+                  placeholder="enter coupon code"
+                  className=""
+                  ref={couponRef}
+                ></input>
+                <span>
+                  <button
+                    className="btn btn-success m-2"
+                    onClick={couponHandler}
+                  >
+                    Apply
+                  </button>
+                </span>
+              </div>
+              <div className="col d-flex  justify-content-center align-items-center text-white text-center pb-3">
+                <div className="row row-cols-1 ">
+                  <p className="col">Total Amount : {totalAmount}</p>
+                  {couponApply == "0%" ? (
+                    <p className="col text-success">coupon : no coupon</p>
+                  ) : (
+                    <p className="col text-success">coupon : {couponApply}</p>
+                  )}
+                  <h4 className="col">{` payable : ${
+                    (totalAmount * (100 - couponApply.replace("%", ""))) / 100
+                  }`}</h4>
+                </div>
+              </div>
+
+              {productIdArray && (
+                <CartPayment
+                  coupon={couponRef.current.value}
+                  productIdArray={productIdArray}
+                ></CartPayment>
               )}
-              <h4 className="col">{` payable : ${
-                (totalAmount * (100 - couponApply.replace("%", ""))) / 100
-              }`}</h4>
             </div>
           </div>
+        </>
+      )}
 
-          {productIdArray && (
-            <CartPayment
-              coupon={couponRef.current.value}
-              productIdArray={productIdArray}
-            ></CartPayment>
-          )}
-        </div>
-      </div>
+      {statecart.length == 0 && (
+        <>
+          <div className="container-fluid fixed-top border text-center d-flex justify-content-between bg-warning">
+            <IoMdArrowRoundBack
+              className="mt-1 ms-2"
+              style={{ height: "30px", width: "30px" }}
+              onClick={() => navigate(-1)}
+            />
+            <h3>Cart</h3>
+            <h3
+              className="mt-1 ms-2"
+              style={{ height: "30px", width: "30px" }}
+            ></h3>
+          </div>
+          <div className="container px-5 py-5 text-center">
+            <h5 className=" py-5 text-center ">No Item to Display in Cart</h5>
+            <button
+              className="btn btn-outline-success fw-bold"
+              onClick={() => navigate("/")}
+            >
+              Buy some item
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 };

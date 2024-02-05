@@ -1,6 +1,10 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { cartSliceActions } from "../store/cart";
+import { toast } from "react-toastify";
 
 const CartPayment = (props) => {
+  const dispatch = useDispatch();
   const initializeRazorpay = () => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -24,57 +28,16 @@ const CartPayment = (props) => {
       return;
     }
 
-    // Make API call to the serverless API
-    // const data = await axios.get(`${domain}/premiumuser/activateMembership`, {
-    //   headers: { Authorization: localStorage.getItem("token") },
-    // });
-
-    // var options = {
-    //   key: data.data.key_id, // Enter the Key ID generated from the Dashboard
-    //   name: "fundsTracker (By-shivam singh)",
-
-    //   order_id: data.data.order.id,
-    //   description: "Thanks for taking pro membership",
-
-    //   handler: async function (response) {
-    //     // Validate payment at server - using webhooks is a better idea.
-    //     try {
-    //       console.log("posting started");
-    //       await axios.post(
-    //         `${domain}/premiumuser/updateMembership`,
-    //         {
-    //           order_id: options.order_id,
-    //           payment_id: response.razorpay_payment_id,
-    //         },
-    //         {
-    //           headers: { Authorization: localStorage.getItem("token") },
-    //         }
-    //       );
-    //       localStorage.setItem("isPremium", true); //later we have to replace this localstorage to context direct fetch method when user reload the page then it should be saved in context
-    //       toast.success("payment done, u are a pro member");
-    //       dispatch(loginSliceActions.premium());
-    //     } catch (err) {
-    //       console.log(err);
-    //       // toast.error(err);
-    //     }
-    //   },
-    //   prefill: {
-    //     name: "shivam singh",
-    //     email: "shivam.handler@gmail.com",
-    //     contact: "9559923286",
-    //   },
-    // };
-
     axios
-      .post(
-        `http://localhost:4000/createorder?coupon=${props.coupon}`,
-        {productIdArray:props.productIdArray,coupon:props.coupon}
-      )
+      .post(`http://localhost:4000/createorder?coupon=${props.coupon}`, {
+        productIdArray: props.productIdArray,
+        coupon: props.coupon,
+      })
       .then((data) => {
-        console.log(data)
+        console.log(data);
         var options = {
           key: data.data.key_id, // Enter the Key ID generated from the Dashboard
-          name: "fundsTracker (By-shivam singh)",
+          name: "MyIndiaTrip",
 
           order_id: data.data.order,
           description:
@@ -82,24 +45,28 @@ const CartPayment = (props) => {
 
           handler: async function (response) {
             // Validate payment at server - using webhooks is a better idea.
-              try {
-                console.log("posting started");
-                await axios.post(
-                  `http://localhost:4000/successfulOrder?orderId=${data.data.order}`,
-                  {
-                    order_id: options.order_id,
-                    payment_id: response.razorpay_payment_id,
+            try {
+             
+              await axios.post(
+                `http://localhost:4000/successfulOrder?orderId=${data.data.order}`,
+                {
+                  order_id: options.order_id,
+                  payment_id: response.razorpay_payment_id,
+                },
+                {
+                  headers: {
+                    'Authorization': localStorage.getItem("token"),
                   },
-                //   {
-                //     headers: { Authorization: localStorage.getItem("token") },
-                //   }
-                );
-                localStorage.setItem("isPremium", true); //later we have to replace this localstorage to context direct fetch method when user reload the page then it should be saved in context
-                alert("payment done");
-              } catch (err) {
-                console.log(err);
-                // toast.error(err);
-              }
+                }
+              )
+              localStorage.setItem("isPremium", true); //later we have to replace this localstorage to context direct fetch method when user reload the page then it should be saved in context
+          
+              dispatch(cartSliceActions.clearCart("aaaa"));
+              toast.success("order successfully placed ,check order section...")
+            } catch (err) {
+              console.log(err);
+              // toast.error(err);
+            }
           },
           prefill: {
             name: "shivam singh",
@@ -111,7 +78,6 @@ const CartPayment = (props) => {
         paymentObject.open();
       })
       .catch((err) => console.log(err));
-
   };
   return (
     <div className="col d-flex align-items-center justify-content-center w-100">

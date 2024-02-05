@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import printcss from "./printServices.module.css"
+
 import { FaCar, FaHotel, FaSwimmingPool } from "react-icons/fa";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 const PrintServices = (props) => {
   const navigate = useNavigate();
-  // console.log(props)
+  
   const productArray = useSelector((state) => {
     return state.data.products;
   });
-  console.log(productArray);
+
   const dataArray = productArray.map((current) => {
-    console.log(current.name);
+   
     let places;
     {
        places = current.packageInclude.places.map(
