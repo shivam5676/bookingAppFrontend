@@ -18,11 +18,11 @@ import SignUp from "./components/signUp";
 function App() {
   const dispatch = useDispatch();
  const login=useSelector(state=>state.login.islogin)
- 
+ const domain=process.env.REACT_APP_BACKENDURL
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/fetchCart`,{
+      .get(`${domain}/fetchCart`,{
         headers: {
           'Authorization': localStorage.getItem("token"),
         },

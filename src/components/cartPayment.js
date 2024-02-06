@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 const CartPayment = (props) => {
   const dispatch = useDispatch();
+  const domain=process.env.REACT_APP_BACKENDURL
   const initializeRazorpay = () => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -29,7 +30,7 @@ const CartPayment = (props) => {
     }
 
     axios
-      .post(`http://localhost:4000/createorder?coupon=${props.coupon}`, {
+      .post(`${domain}/createorder?coupon=${props.coupon}`, {
         productIdArray: props.productIdArray,
         coupon: props.coupon,
       })
@@ -48,7 +49,7 @@ const CartPayment = (props) => {
             try {
              
               await axios.post(
-                `http://localhost:4000/successfulOrder?orderId=${data.data.order}`,
+                `${domain}/successfulOrder?orderId=${data.data.order}`,
                 {
                   order_id: options.order_id,
                   payment_id: response.razorpay_payment_id,

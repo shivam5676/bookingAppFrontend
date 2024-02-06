@@ -14,7 +14,7 @@ import { loginSliceActions } from "../store/login";
 
 
 const Login = () => {
-  const domain="http://localhost:4000"
+  const domain=process.env.REACT_APP_BACKENDURL
 
  
   const navigate = useNavigate();

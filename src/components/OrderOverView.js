@@ -11,13 +11,13 @@ import { IoMdLocate } from "react-icons/io";
 import { ThreeCircles } from "react-loader-spinner";
 const ProductOverView = () => {
   const dispatch = useDispatch();
-
+  const domain=process.env.REACT_APP_BACKENDURL
   const params = useParams();
 
   const [productDescription, setProductDescription] = useState(null);
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/productDetails/${params.productid}`, {
+      .get(`${domain}/productDetails/${params.productid}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },

@@ -8,10 +8,11 @@ const BuyBtn = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [purchased, setPurchased] = useState(false);
+  const domain=process.env.REACT_APP_BACKENDURL
   function addItemToCart() {
     
     axios
-      .post(`http://localhost:4000/addItem?pid=${props.productId}`,null ,{
+      .post(`${domain}/addItem?pid=${props.productId}`,null ,{
         headers: {
           'Authorization': localStorage.getItem("token"),
         },

@@ -4,11 +4,12 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
+  const domain=process.env.REACT_APP_BACKENDURL
   const navigate = useNavigate();
   const [itemArray, setItemArray] = useState([]);
   useEffect(() => {
     axios
-    .get(`http://localhost:4000/fetchOrders?userid=${1}`, {
+    .get(`${domain}/fetchOrders?userid=${1}`, {
       headers: {
         'Authorization': localStorage.getItem("token"),
       },

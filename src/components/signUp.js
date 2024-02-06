@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 
 const SignUp = () => {
-  const domain = "http://localhost:4000";
+  const domain=process.env.REACT_APP_BACKENDURL
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");

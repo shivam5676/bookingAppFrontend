@@ -7,6 +7,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const CartItemPrint = () => {
   const navigate = useNavigate();
+  const domain=process.env.REACT_APP_BACKENDURL
   const statecart = useSelector((current) => current.cart.cartItem);
  
   const [cartData, setCartData] = useState(null);
@@ -21,7 +22,7 @@ let couponEntered;
 
     axios
       .get(
-        `http://localhost:4000/couponVerify?coupon=${couponEntered}`,
+        `${domain}/couponVerify?coupon=${couponEntered}`,
         {
           headers: {
             'Authorization': localStorage.getItem("token"),

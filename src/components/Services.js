@@ -7,11 +7,11 @@ import { dataSliceActions } from "../store/data";
 import axios from "axios";
 
 const Services = () => {
-  
+  const domain=process.env.REACT_APP_BACKENDURL
   const dispatch=useDispatch()
   useEffect(() => {
     axios
-      .get("http://localhost:4000/products", {headers: {
+      .get(`${domain}/products`, {headers: {
         'Authorization': localStorage.getItem("token"),
       }},)
       .then((result) => {
