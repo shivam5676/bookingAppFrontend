@@ -11,7 +11,7 @@ import { IoMdLocate } from "react-icons/io";
 import { ThreeCircles } from "react-loader-spinner";
 const ProductOverView = () => {
   const dispatch = useDispatch();
-  const domain=process.env.REACT_APP_BACKENDURL
+  const domain = process.env.REACT_APP_BACKENDURL;
   const params = useParams();
 
   const [productDescription, setProductDescription] = useState(null);
@@ -29,13 +29,13 @@ const ProductOverView = () => {
 
       .catch((err) => console.log(err));
   }, []);
-
+  console.log(productDescription);
   return (
     <>
       {productDescription ? (
         <div className="container-fluid py-1 text-center ">
           <ProductOverViewHeader
-            title={productDescription.product.name}
+            title={productDescription.bookingproduct.name}
           ></ProductOverViewHeader>
           <div className="container pb-2 px-sm-3 pt-3 mt-5 ">
             <div id="carouselExampleCaptions" className="carousel slide">
@@ -132,7 +132,7 @@ const ProductOverView = () => {
                   <h4>Package Details</h4>
                   <h6>
                     <FaClock />{" "}
-                    {productDescription.product.packageInclude.Duration}
+                    {productDescription.bookingproduct.packageInclude.Duration}
                   </h6>
                   <h6>
                     <IoMdLocate />{" "}
@@ -158,7 +158,7 @@ const ProductOverView = () => {
           </div>
           <BuyBtn
             productId={productDescription.productId}
-            price={productDescription.product.price}
+            price={productDescription.bookingproduct.price}
           ></BuyBtn>
         </div>
       ) : (
