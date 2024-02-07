@@ -10,7 +10,7 @@ const cartSlice = createSlice({
 
       const findProduct = state.cartItem.findIndex((current) => {
         return (
-          current.userId == action.payload.userId &&
+          current.bookinguserId == action.payload.bookinguserId &&
           current.productId == action.payload.productId
         );
       });

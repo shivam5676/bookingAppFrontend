@@ -4,6 +4,7 @@ import navcss from "./navbar.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loginSliceActions } from "../store/login";
+import { cartSliceActions } from "../store/cart";
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch=useDispatch()
@@ -56,7 +57,9 @@ const NavBar = () => {
               className="btn btn-outline-light fw-bolder "
               onClick={() => {
                 localStorage.removeItem("isLogged");
+                localStorage.removeItem("token");
                 dispatch(loginSliceActions.logout())
+                dispatch(cartSliceActions.clearCart())
               }}
             >
               LogOut

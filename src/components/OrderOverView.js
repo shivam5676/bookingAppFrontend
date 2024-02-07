@@ -35,7 +35,7 @@ const ProductOverView = () => {
       {productDescription ? (
         <div className="container-fluid py-1 text-center ">
           <ProductOverViewHeader
-            title={productDescription.bookingproduct.name}
+            title={productDescription.name}
           ></ProductOverViewHeader>
           <div className="container pb-2 px-sm-3 pt-3 mt-5 ">
             <div id="carouselExampleCaptions" className="carousel slide">
@@ -132,7 +132,7 @@ const ProductOverView = () => {
                   <h4>Package Details</h4>
                   <h6>
                     <FaClock />{" "}
-                    {productDescription.bookingproduct.packageInclude.Duration}
+                    {productDescription.product.packageInclude.Duration}
                   </h6>
                   <h6>
                     <IoMdLocate />{" "}
@@ -158,7 +158,7 @@ const ProductOverView = () => {
           </div>
           <BuyBtn
             productId={productDescription.productId}
-            price={productDescription.bookingproduct.price}
+            price={productDescription.product.price}
           ></BuyBtn>
         </div>
       ) : (
