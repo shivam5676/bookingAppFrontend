@@ -3,33 +3,34 @@ import { useNavigate } from "react-router-dom";
 import { FaCar, FaHotel, FaSwimmingPool } from "react-icons/fa";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { Blocks } from "react-loader-spinner";
 const PrintServices = (props) => {
   const navigate = useNavigate();
-  
+
   const productArray = useSelector((state) => {
     return state.data.products;
   });
 
   const dataArray = productArray.map((current) => {
-   
     let places;
     {
-       places = current.packageInclude.places.map(
-        (currentplace, index) => {
-          return (
-            <p className="ps-2 my-0" key={index}>
-              {currentplace}
-            </p>
-          );
-        }
-      );
+      places = current.packageInclude.places.map((currentplace, index) => {
+        return (
+          <p className="ps-2 my-0" key={index}>
+            {currentplace}
+          </p>
+        );
+      });
     }
     return (
       <div className="col " key={current.id}>
         <div
           className={`card shadow bg-body-tertiary mt-3 `}
           onClick={() => {
-            navigate(`/product/${current.id}`,{state:current.packageInclude});
+            navigate(`/product/${current.id}`, {
+              state: current.packageInclude,
+            });
           }}
         >
           <img
@@ -39,15 +40,15 @@ const PrintServices = (props) => {
             draggable="false"
           ></img>
 
-          <div className={ `border-bottom d-flex justify-content-between px-1 `}>
+          <div className={`border-bottom d-flex justify-content-between px-1 `}>
             <h3 className="px-1">{current.name}</h3>
-            <span className="px-1 fw-lighter">{current.packageInclude.Duration}</span>
+            <span className="px-1 fw-lighter">
+              {current.packageInclude.Duration}
+            </span>
           </div>
 
           <div className="row row-cols-2">
-            <div className="col border-end py-1 ">
-              {places}
-            </div>
+            <div className="col border-end py-1 ">{places}</div>
             <div className="col ">
               <p className="ps-2 my-0 fw-bold">
                 <FaSwimmingPool /> swimming pool
@@ -147,9 +148,26 @@ const PrintServices = (props) => {
       <h3 className="text-center fw-bold" key={Math.random()}>
         Latest Tourist Spot
       </h3>
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-4 pb-1">
-        {dataArray}
-      </div>
+      <>
+        {productArray.length>0 ? (
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-4 pb-1">
+            {dataArray}
+          </div>
+        ) : (
+          <div className="container text-center">
+            <Blocks
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              visible={true}
+            />
+            <p>wait, Data loading....</p>
+          </div>
+        )}
+      </>
     </div>
   );
 };
