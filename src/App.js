@@ -71,6 +71,10 @@ function App() {
                 </>
               }
             ></Route>
+            <Route
+              path="/product/:productid"
+              element={<ProductOverView></ProductOverView>}
+            ></Route>
             <Route path="/signup" element={<SignUp></SignUp>}></Route>
             <Route path="*" element={<Login></Login>}></Route>
           </>

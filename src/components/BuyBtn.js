@@ -2,19 +2,23 @@ import { useNavigate } from "react-router-dom";
 import BuyBtncss from "./BuyBtn.module.css";
 import axios from "axios";
 import { cartSliceActions } from "../store/cart";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 const BuyBtn = (props) => {
+  const login = useSelector((state) => state.login.islogin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [purchased, setPurchased] = useState(false);
-  const domain=process.env.REACT_APP_BACKENDURL
+  const domain = process.env.REACT_APP_BACKENDURL;
   function addItemToCart() {
-    
+    if (!login) {
+      navigate("/login");
+      return;
+    }
     axios
-      .post(`${domain}/addItem?pid=${props.productId}`,null ,{
+      .post(`${domain}/addItem?pid=${props.productId}`, null, {
         headers: {
-          'Authorization': localStorage.getItem("token"),
+          Authorization: localStorage.getItem("token"),
         },
       })
       .then((result) => {
