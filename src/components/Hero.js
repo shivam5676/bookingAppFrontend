@@ -4,12 +4,12 @@ const Hero = () => {
   return (
     <div className="pt-5">
       <div
-        className={`px-4 py-5 mb-2 text-center mt-2 mt-md-3 mt-lg-4 ${herocss.herobg}`}
+        className={`px-4 py-sm-5 pb-1 mb-2 text-center mt-sm-2 mt-md-3 mt-lg-4 ${herocss.herobg}`}
       >
         <img className="d-block mx-auto mb-4" alt="" />
         <p
-          className="display-5 fw-bold  p-2 text-white"
-          style={{ fontFamily: "cursive" }}
+          className="display-5 fw-bold  p-2 "
+          style={{color:"orange"}}
         >
           Your Gateway to Incredible India Experiences
         </p>

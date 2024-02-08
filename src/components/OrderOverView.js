@@ -35,7 +35,7 @@ const ProductOverView = () => {
       {productDescription ? (
         <div className="container-fluid py-1 text-center ">
           <ProductOverViewHeader
-            title={productDescription.name}
+            title={productDescription.product.name}
           ></ProductOverViewHeader>
           <div className="container pb-2 px-sm-3 pt-3 mt-5 ">
             <div id="carouselExampleCaptions" className="carousel slide">

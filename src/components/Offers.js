@@ -4,7 +4,7 @@ const Offers = () => {
   return (
     <div className="container-fluid mx-0">
       <h3 className="text-center fw-bold">Exclusive Offers</h3>
-      <div className={` ${offercss.offersContainer} py-2`}>
+      <div className={` ${offercss.offersContainer} py-sm-2`}>
         <div className={`${offercss.offersCard} bg-danger bg-gradient `}>
           <div className="container py-sm-2 px-sm-4 text-wrap">
             <h4 className="col text-center text-white border-bottom pb-2">

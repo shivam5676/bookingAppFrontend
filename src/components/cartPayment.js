@@ -66,7 +66,8 @@ const CartPayment = (props) => {
               toast.success("order successfully placed ,check order section...")
             } catch (err) {
               console.log(err);
-              // toast.error(err);
+              toast.error("payment not made ,see ur payment status in order tab");
+              dispatch(cartSliceActions.clearCart("aaaa"));
             }
           },
           prefill: {
